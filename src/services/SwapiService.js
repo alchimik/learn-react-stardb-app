@@ -1,3 +1,5 @@
+const DEVELOPMENT_NETWORK_DELAY = 1000;
+
 export default class SwapiService {
   _baseUrl = 'https://swapi.dev/api/';
   _peoplePath = 'people/';
@@ -11,7 +13,8 @@ export default class SwapiService {
       throw new Error(`Could not fetch ${path}, status: ${response.status}`);
     }
 
-    return await response.json();
+    const json = await response.json();
+    return await this._delay(json);
   }
 
   async getAllPeople () {
@@ -46,7 +49,7 @@ export default class SwapiService {
 
   _extractIdFromUrl (url) {
     const matches = url.match(/\/(\d+)\/$/);
-    return matches[1];
+    return parseInt(matches[1]);
   }
 
   _transformPlanet (planet) {
@@ -84,5 +87,13 @@ export default class SwapiService {
       birthYear: person.birth_year,
       eyeColor: person.eye_color
     };
+  }
+
+  async _delay (p) {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        resolve(p);
+      }, DEVELOPMENT_NETWORK_DELAY);
+    });
   }
 }
