@@ -1,10 +1,15 @@
 import React from 'react';
-import SwapiService from '../../services/SwapiService';
 import ItemViewer from '../ItemViewer';
+import { withSwapiService } from '../SwapiServiceContext';
 
-const swapiService = new SwapiService();
+const ItemViewerWithSwapi = withSwapiService(ItemViewer, (swapiService) => {
+  return {
+    getItemList: swapiService.getAllPeople,
+    getItemById: swapiService.getPerson
+  }
+})
 
-export default function PeoplePage () {
+function PeoplePage () {
   const fieldList = {
     id: 'Id',
     name: 'Name',
@@ -13,10 +18,11 @@ export default function PeoplePage () {
     eyeColor: 'Eye color',
   };
 
-  return <ItemViewer
-    getItemList={swapiService.getAllPeople}
-    getItemById={swapiService.getPerson}
-    listItemContent={(item) => ({ title: item.name, desc: `${item.gender}, ${item.birthYear}` })}
+  return <ItemViewerWithSwapi
     fieldList={fieldList}
+    listItemContent={(item) => ({ title: item.name, desc: `${item.gender}, ${item.birthYear}` })}
   />;
 }
+
+
+export default PeoplePage;

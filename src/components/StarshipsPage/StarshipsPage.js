@@ -1,10 +1,15 @@
 import React from 'react';
-import SwapiService from '../../services/SwapiService';
 import ItemViewer from '../ItemViewer';
+import { withSwapiService } from '../SwapiServiceContext';
 
-const swapiService = new SwapiService();
+const ItemViewerWithSwapi = withSwapiService(ItemViewer, (swapiService) => {
+  return {
+    getItemList: swapiService.getAllStarships,
+    getItemById: swapiService.getStarship
+  };
+});
 
-export default function StarshipsPage () {
+function StarshipsPage () {
   const fieldList = {
     id: 'id',
     name: 'name',
@@ -17,10 +22,10 @@ export default function StarshipsPage () {
     cargoCapacity: 'cargoCapacity'
   };
 
-  return <ItemViewer
-    getItemList={swapiService.getAllStarships}
-    getItemById={swapiService.getStarship}
+  return <ItemViewerWithSwapi
     listItemContent={(item) => ({ title: item.name })}
     fieldList={fieldList}
   />;
 }
+
+export default StarshipsPage;

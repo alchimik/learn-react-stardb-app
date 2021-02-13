@@ -1,9 +1,8 @@
 import React from 'react';
-
-import SwapiService from '../../services/SwapiService';
 import Spinner from '../Spinner';
 
 import './RandomPlanet.scss';
+import { withSwapiService } from '../SwapiServiceContext';
 
 class RandomPlanet extends React.Component {
   state = {
@@ -11,8 +10,6 @@ class RandomPlanet extends React.Component {
   };
 
   timer = null;
-
-  swapiService = new SwapiService();
 
   onPlanetLoaded = (planet) => {
     this.setState({ planet });
@@ -24,8 +21,7 @@ class RandomPlanet extends React.Component {
       planet: false
     });
 
-    this.swapiService
-      .getPlanet(id)
+    this.props.getPlanet(id)
       .then(this.onPlanetLoaded);
   };
 
@@ -71,4 +67,8 @@ function getRandomInt (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export default RandomPlanet;
+export default withSwapiService(RandomPlanet, (swapiService) => {
+  return {
+    getPlanet: swapiService.getPlanet
+  };
+});

@@ -1,10 +1,15 @@
 import React from 'react';
-import SwapiService from '../../services/SwapiService';
 import ItemViewer from '../ItemViewer';
+import { withSwapiService } from '../SwapiServiceContext';
 
-const swapiService = new SwapiService();
+const ItemViewerWithSwapi = withSwapiService(ItemViewer, (swapiService) => {
+  return {
+    getItemList: swapiService.getAllPlanets,
+    getItemById: swapiService.getPlanet
+  };
+});
 
-export default function PeoplePage () {
+function PlanetPage () {
   const fieldList = {
     id: 'id',
     name: 'name',
@@ -13,10 +18,10 @@ export default function PeoplePage () {
     diameter: 'diameter',
   };
 
-  return <ItemViewer
-    getItemList={swapiService.getAllPlanets}
-    getItemById={swapiService.getPlanet}
+  return <ItemViewerWithSwapi
     listItemContent={(item) => ({ title: item.name, desc: '' })}
     fieldList={fieldList}
   />;
 }
+
+export default PlanetPage;
