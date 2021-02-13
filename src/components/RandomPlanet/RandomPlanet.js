@@ -49,16 +49,16 @@ class RandomPlanet extends React.Component {
       );
     }
 
-    const { image_url, name, population, rotation_period, diameter } = planet;
+    const { imageUrl, name, population, rotationPeriod, diameter } = planet;
 
     return (
       <div className='random-planet  jumbotron  clearfix'>
-        <img src={image_url} className='random-planet__logo' alt=""/>
+        <img src={imageUrl} className='random-planet__logo' alt=""/>
         <h2>Random planet name: {name}</h2>
         <div>
           <ul>
             <li>Population: {population}</li>
-            <li>Rotation Period: {rotation_period}</li>
+            <li>Rotation Period: {rotationPeriod}</li>
             <li>Diameter: {diameter}</li>
           </ul>
         </div>

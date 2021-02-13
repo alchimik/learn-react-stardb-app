@@ -6,6 +6,8 @@ import PeoplePage from '../PeoplePage';
 import RandomPlanet from '../RandomPlanet';
 
 import './App.scss';
+import PlanetsPage from '../PlanetsPage/PlanetsPage';
+import StarshipsPage from '../StarshipsPage';
 
 class App extends React.Component {
   render () {
@@ -18,9 +20,14 @@ class App extends React.Component {
             <ErrorButton/>
           </div>
 
-          <div className="main-content">
-            <PeoplePage/>
-          </div>
+          <h2>People</h2>
+          <PeoplePage/>
+
+          <h2>Planets</h2>
+          <PlanetsPage/>
+
+          <h2>Starships</h2>
+          <StarshipsPage/>
         </div>
       </ErrorBoundary>
     );

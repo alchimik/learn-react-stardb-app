@@ -1,61 +1,34 @@
 import React from 'react';
 
 import './ItemList.scss';
-import SwapiService from '../../services/SwapiService';
-import Spinner from '../Spinner';
+import withData from '../../HOC/withData/withData';
 
-class ItemList extends React.Component {
-  swapiService = new SwapiService();
+function ItemList (props) {
+  const { data, children, selectedItemId } = props;
 
-  state = {
-    peopleList: [],
-    selectedItemId: null
-  };
-
-  componentDidMount () {
-    this.swapiService
-      .getAllPeople()
-      .then((peopleList) => {
-        this.setState({ peopleList });
-      });
-
-  }
-
-  onItemSelected = (id) => {
-    this.setState({
-      selectedItemId: id
-    });
-
-    this.props.onItemSelected(id);
-  };
-
-  render () {
-    const { peopleList } = this.state;
-
-    if (peopleList.length <= 0) {
-      return <Spinner/>;
+  const itemsViewArr = data.map((item) => {
+    let clazz = 'item-list__item  list-group-item';
+    if (item.id === selectedItemId) {
+      clazz += '  active';
     }
 
-    const itemsViewList = peopleList.map(({ id, name }) => {
-      let clazz = 'list-group-item';
-      if (id === this.state.selectedItemId) {
-        clazz += '  active';
-      }
-      return (
-        <li key={id}
-            className={clazz}
-            onClick={() => this.onItemSelected(id)}>
-          {name}
-        </li>
-      );
-    });
+    let { title, desc } = children(item);
 
     return (
-      <ul className="item-list  list-group">
-        {itemsViewList}
-      </ul>
+      <li key={item.id}
+          className={clazz}
+          onClick={() => props.onItemSelected(item.id)}
+      >
+        {title} <span>{desc}</span>
+      </li>
     );
-  }
+  });
+
+  return (
+    <ul className="item-list  list-group  item-list">
+      {itemsViewArr}
+    </ul>
+  );
 }
 
-export default ItemList;
+export default withData(ItemList);

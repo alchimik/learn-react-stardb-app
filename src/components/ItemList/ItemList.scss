@@ -1,7 +1,16 @@
-.list-group-item {
+.item-list__item {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
   cursor: pointer;
 
   &.active {
     cursor: default;
+  }
+
+  span {
+    margin-left: auto;
+    font-size: 0.9em;
+    opacity: 0.6;
   }
 }

@@ -1,28 +1,22 @@
 import React from 'react';
-import ItemList from '../ItemList';
-import PersonDetails from '../PersonDetails';
-import ErrorBoundary from '../ErrorBoundary';
+import SwapiService from '../../services/SwapiService';
+import ItemViewer from '../ItemViewer';
 
-export default class PeoplePage extends React.Component {
-  state = {
-    selectedItemId: null
+const swapiService = new SwapiService();
+
+export default function PeoplePage () {
+  const fieldList = {
+    id: 'Id',
+    name: 'Name',
+    gender: 'Gender',
+    birthYear: 'Birth year',
+    eyeColor: 'Eye color',
   };
 
-  onItemSelected = (id) => {
-    this.setState({
-      selectedItemId: id
-    });
-  };
-
-  render () {
-    let { selectedItemId } = this.state;
-    return <ErrorBoundary>
-      <div>
-        <ItemList onItemSelected={this.onItemSelected}/>
-      </div>
-      <div>
-        {selectedItemId ? <PersonDetails id={selectedItemId}/> : null}
-      </div>
-    </ErrorBoundary>;
-  }
+  return <ItemViewer
+    getItemList={swapiService.getAllPeople}
+    getItemById={swapiService.getPerson}
+    listItemContent={(item) => ({ title: item.name, desc: `${item.gender}, ${item.birthYear}` })}
+    fieldList={fieldList}
+  />;
 }
