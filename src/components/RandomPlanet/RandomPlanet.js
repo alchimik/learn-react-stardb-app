@@ -2,7 +2,7 @@ import React from 'react';
 import Spinner from '../Spinner';
 
 import './RandomPlanet.scss';
-import { withSwapiService } from '../SwapiServiceContext';
+import { withSwapiService } from '../hoc-helpers';
 
 class RandomPlanet extends React.Component {
   state = {

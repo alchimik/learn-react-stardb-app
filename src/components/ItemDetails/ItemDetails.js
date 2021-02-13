@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './ItemDetails.scss';
-import withData from '../../HOC/withData/withData';
+import { withData }  from '../hoc-helpers';
 
 function ItemDetails (props) {
   const { data, fieldList } = props;

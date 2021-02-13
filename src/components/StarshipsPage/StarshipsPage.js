@@ -1,6 +1,6 @@
 import React from 'react';
 import ItemViewer from '../ItemViewer';
-import { withSwapiService } from '../SwapiServiceContext';
+import { withSwapiService } from '../hoc-helpers';
 
 const ItemViewerWithSwapi = withSwapiService(ItemViewer, (swapiService) => {
   return {

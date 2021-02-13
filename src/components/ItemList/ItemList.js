@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './ItemList.scss';
-import withData from '../../HOC/withData/withData';
+import { withData }  from '../hoc-helpers';
 
 function ItemList (props) {
   const { data, children, selectedItemId } = props;
