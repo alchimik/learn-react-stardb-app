@@ -3,17 +3,17 @@ import ErrorIndicator from '../ErrorIndicator';
 
 export default class ErrorBoundary extends React.Component {
   state = {
-    hasError: false
+    error: false
   };
 
   componentDidCatch (error, errorInfo) {
     console.log('ErrorBoundary:componentDidCatch');
-    this.setState({ hasError: true });
+    this.setState({ error: error });
   }
 
   render () {
-    if (this.state.hasError) {
-      console.log('ErrorBoundary:render error');
+    if (this.state.error) {
+      console.log('ErrorBoundary error', this.state.error);
       return <ErrorIndicator/>;
     }
 

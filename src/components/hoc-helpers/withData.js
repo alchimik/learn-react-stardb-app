@@ -22,13 +22,13 @@ const withData = (View) => {
       const onSuccess = (data) => {
         !ignoreResult && this.setState({ data, loading: false, error: false });
       };
-      const onError = () => {
-        !ignoreResult && this.setState({ data: null, loading: false, error: true });
+      const onError = (error) => {
+        !ignoreResult && this.setState({ data: null, loading: false, error: error });
       };
 
       this.setState({ data: null, loading: true, error: false });
       this.props.getData().then(
-        (data) => onSuccess(data),
+        onSuccess,
         onError
       );
 
@@ -36,11 +36,11 @@ const withData = (View) => {
     }
 
     componentDidMount () {
-      this.clearEffects = this.runDataLoad(this.props.id);
+      this.clearEffects = this.runDataLoad();
     }
 
     componentDidCatch (error, errorInfo) {
-      this.setState({ data: null, loading: false, error: true });
+      this.setState({ data: null, loading: false, error: error });
     }
 
     componentDidUpdate (prevProps, prevState, snapshot) {
@@ -55,13 +55,14 @@ const withData = (View) => {
     }
 
     render () {
-      var { data, loading, error } = this.state;
+      const { data, loading, error } = this.state;
 
       if (loading) {
         return <Spinner/>;
       }
 
       if (error) {
+        console.log(error);
         return <ErrorIndicator/>;
       }
 

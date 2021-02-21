@@ -1,28 +1,9 @@
 import React from 'react';
-import ItemViewer from '../ItemViewer';
-import { withSwapiService } from '../hoc-helpers';
+import { PeopleList } from '../SWComponents';
+import { withRouter } from 'react-router-dom';
 
-const ItemViewerWithSwapi = withSwapiService(ItemViewer, (swapiService) => {
-  return {
-    getItemList: swapiService.getAllPeople,
-    getItemById: swapiService.getPerson
-  }
-})
-
-function PeoplePage () {
-  const fieldList = {
-    id: 'Id',
-    name: 'Name',
-    gender: 'Gender',
-    birthYear: 'Birth year',
-    eyeColor: 'Eye color',
-  };
-
-  return <ItemViewerWithSwapi
-    fieldList={fieldList}
-    listItemContent={(item) => ({ title: item.name, desc: `${item.gender}, ${item.birthYear}` })}
-  />;
+function PeoplePage ({ history }) {
+  return <PeopleList onItemSelected={(id) => history.push(`${id}`)}/>;
 }
 
-
-export default PeoplePage;
+export default withRouter(PeoplePage);

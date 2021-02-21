@@ -1,27 +1,24 @@
 import React from 'react';
-import ItemViewer from '../ItemViewer';
-import { withSwapiService } from '../hoc-helpers';
-
-const ItemViewerWithSwapi = withSwapiService(ItemViewer, (swapiService) => {
-  return {
-    getItemList: swapiService.getAllPlanets,
-    getItemById: swapiService.getPlanet
-  };
-});
+import { PlanetDetails, PlanetList } from '../SWComponents';
+import { useHistory, useParams } from 'react-router-dom';
 
 function PlanetPage () {
-  const fieldList = {
-    id: 'id',
-    name: 'name',
-    population: 'population',
-    rotationPeriod: 'rotationPeriod',
-    diameter: 'diameter',
-  };
+  const history = useHistory();
+  const params = useParams();
 
-  return <ItemViewerWithSwapi
-    listItemContent={(item) => ({ title: item.name, desc: '' })}
-    fieldList={fieldList}
-  />;
+  const { id } = params;
+
+  return <div className="row row-cols-2">
+    <div className="col">
+      <PlanetList onItemSelected={(id) => history.push(`${id}`)}/>
+    </div>
+    <div className="col">
+      {id ?
+        <PlanetDetails itemId={id}/> :
+        <span>Выберите элемент из списка!</span>
+      }
+    </div>
+  </div>;
 }
 
 export default PlanetPage;

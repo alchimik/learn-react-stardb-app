@@ -4,19 +4,15 @@ import './ItemList.scss';
 import { withData }  from '../hoc-helpers';
 
 function ItemList (props) {
-  const { data, children, selectedItemId } = props;
+  const { data, children } = props;
 
   const itemsViewArr = data.map((item) => {
-    let clazz = 'item-list__item  list-group-item';
-    if (item.id === selectedItemId) {
-      clazz += '  active';
-    }
 
     let { title, desc } = children(item);
 
     return (
       <li key={item.id}
-          className={clazz}
+          className='item-list__item  list-group-item'
           onClick={() => props.onItemSelected(item.id)}
       >
         {title} <span>{desc}</span>

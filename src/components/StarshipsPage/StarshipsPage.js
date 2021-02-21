@@ -1,31 +1,19 @@
-import React from 'react';
-import ItemViewer from '../ItemViewer';
-import { withSwapiService } from '../hoc-helpers';
-
-const ItemViewerWithSwapi = withSwapiService(ItemViewer, (swapiService) => {
-  return {
-    getItemList: swapiService.getAllStarships,
-    getItemById: swapiService.getStarship
-  };
-});
+import React, { useState } from 'react';
+import { StarshipDetails, StarshipList } from '../SWComponents';
 
 function StarshipsPage () {
-  const fieldList = {
-    id: 'id',
-    name: 'name',
-    model: 'model',
-    manufacturer: 'manufacturer',
-    costInCredits: 'costInCredits',
-    length: 'length',
-    crew: 'crew',
-    passengers: 'passengers',
-    cargoCapacity: 'cargoCapacity'
-  };
+  const [id, setId] = useState();
 
-  return <ItemViewerWithSwapi
-    listItemContent={(item) => ({ title: item.name })}
-    fieldList={fieldList}
-  />;
+  return <div className="row row-cols-2">
+    <div className="col">
+      <StarshipList onItemSelected={(id) => setId(id)}/>
+    </div>
+    <div className="col">
+      {id ?
+        <StarshipDetails itemId={id}/> :
+        <span>Выберите элемент из списка!</span>}
+    </div>
+  </div>;
 }
 
 export default StarshipsPage;
