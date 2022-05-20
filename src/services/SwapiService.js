@@ -1,64 +1,64 @@
 const DEVELOPMENT_NETWORK_DELAY = 1000;
 
 export default class SwapiService {
-  _baseUrl = 'https://swapi.dev/api/';
-  _baseImgUrl = 'https://starwars-visualguide.com/assets/img';
-  _peoplePath = 'people/';
-  _planetsPath = 'planets/';
-  _starshipsPath = 'starships/';
+  #baseUrl = 'https://swapi.dev/api/';
+  #baseImgUrl = 'https://starwars-visualguide.com/assets/img';
+  #peoplePath = 'people/';
+  #planetsPath = 'planets/';
+  #starshipsPath = 'starships/';
 
   getAllPeople = async () => {
-    const res = await this._getResource(this._peoplePath);
-    return res.results.map((item) => this._transformPerson(item));
+    const res = await this.#getResource(this.#peoplePath);
+    return res.results.map((item) => this.#transformPerson(item));
   };
 
   getPerson = async (id) => {
-    const person = await this._getResource(this._peoplePath + id + '/');
-    return this._transformPerson(person);
+    const person = await this.#getResource(this.#peoplePath + id + '/');
+    return this.#transformPerson(person);
   };
 
   getAllPlanets = async () => {
-    const res = await this._getResource(this._planetsPath);
-    return res.results.map((item) => this._transformPlanet(item));
+    const res = await this.#getResource(this.#planetsPath);
+    return res.results.map((item) => this.#transformPlanet(item));
   };
 
   getPlanet = async (id) => {
-    const planet = await this._getResource(this._planetsPath + id + '/');
-    return this._transformPlanet(planet);
+    const planet = await this.#getResource(this.#planetsPath + id + '/');
+    return this.#transformPlanet(planet);
   };
 
   getAllStarships = async () => {
-    const res = await this._getResource(this._starshipsPath);
-    return res.results.map((item) => this._transformStarship(item));
+    const res = await this.#getResource(this.#starshipsPath);
+    return res.results.map((item) => this.#transformStarship(item));
   };
 
   getStarship = async (id) => {
-    const starship = await this._getResource(this._starshipsPath + id + '/');
-    return this._transformStarship(starship);
+    const starship = await this.#getResource(this.#starshipsPath + id + '/');
+    return this.#transformStarship(starship);
   };
 
-  async _getResource (path) {
-    const response = await fetch(this._baseUrl + path);
+  async #getResource (path) {
+    const response = await fetch(this.#baseUrl + path);
 
     if (!response.ok) {
       throw new Error(`Could not fetch ${path}, status: ${response.status}`);
     }
 
     const json = await response.json();
-    return await this._delay(json);
+    return await this.#delay(json);
   }
 
-  _extractIdFromUrl (url) {
+  #extractIdFromUrl (url) {
     const matches = url.match(/\/(\d+)\/$/);
     return parseInt(matches[1]);
   }
 
-  _transformPlanet (planet) {
-    const id = this._extractIdFromUrl(planet.url);
+  #transformPlanet (planet) {
+    const id = this.#extractIdFromUrl(planet.url);
 
     return {
       id: id,
-      imageUrl: this._getImageUrl(id, 'planets'),
+      imageUrl: this.#getImageUrl(id, 'planets'),
       name: planet.name,
       population: planet.population,
       rotationPeriod: planet.rotation_period,
@@ -66,12 +66,12 @@ export default class SwapiService {
     };
   }
 
-  _transformStarship (starship) {
-    const id = this._extractIdFromUrl(starship.url);
+  #transformStarship (starship) {
+    const id = this.#extractIdFromUrl(starship.url);
 
     return {
       id: id,
-      imageUrl: this._getImageUrl(id, 'starships'),
+      imageUrl: this.#getImageUrl(id, 'starships'),
       name: starship.name,
       model: starship.model,
       manufacturer: starship.manufacturer,
@@ -83,12 +83,12 @@ export default class SwapiService {
     };
   }
 
-  _transformPerson (person) {
-    const id = this._extractIdFromUrl(person.url);
+  #transformPerson (person) {
+    const id = this.#extractIdFromUrl(person.url);
 
     return {
       id: id,
-      imageUrl: this._getImageUrl(id, 'characters'),
+      imageUrl: this.#getImageUrl(id, 'characters'),
       name: person.name,
       gender: person.gender,
       birthYear: person.birth_year,
@@ -96,7 +96,7 @@ export default class SwapiService {
     };
   }
 
-  async _delay (p) {
+  async #delay (p) {
     return new Promise((resolve, reject) => {
       setTimeout(async () => {
         resolve(p);
@@ -104,7 +104,7 @@ export default class SwapiService {
     });
   }
 
-  _getImageUrl (id, collection) {
-    return `${this._baseImgUrl}/${collection}/${id}.jpg`;
+  #getImageUrl (id, collection) {
+    return `${this.#baseImgUrl}/${collection}/${id}.jpg`;
   }
 }
