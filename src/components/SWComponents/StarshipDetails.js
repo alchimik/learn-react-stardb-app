@@ -1,4 +1,4 @@
-import ItemDetails from '../ItemDetails/ItemDetails';
+import ItemDetails from '../ItemDetails';
 import { withSwapiService } from '../hoc-helpers';
 
 const _StarshipDetails = (props) => {
