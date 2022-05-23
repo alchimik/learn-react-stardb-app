@@ -1,18 +1,19 @@
 import ItemDetails from '../ItemDetails';
 import { withSwapiService } from '../hoc-helpers';
+import { ItemDetailRecord as Record } from '../ItemDetails';
 
 const _PersonDetails = (props) => {
   const { getData, itemId } = props;
 
-  const fieldList = {
-    id: 'Id',
-    name: 'Name',
-    gender: 'Gender',
-    birthYear: 'Birth year',
-    eyeColor: 'Eye color',
-  };
-
-  return <ItemDetails fieldList={fieldList}  getData={() => getData(itemId)}/>;
+  return (
+    <ItemDetails getData={() => getData(itemId)}>
+      <Record field="id" label="Id"/>
+      <Record field="name" label="Name"/>
+      <Record field="gender" label="Gender"/>
+      <Record field="birthYear" label="Birth year"/>
+      <Record field="eyeColor" label="Eye color"/>
+    </ItemDetails>
+  );
 };
 
 const PersonDetails = withSwapiService(_PersonDetails, (swapiService) => {

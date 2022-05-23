@@ -1,22 +1,19 @@
-import ItemDetails from '../ItemDetails';
+import ItemDetails, { ItemDetailRecord as Record } from '../ItemDetails';
 import { withSwapiService } from '../hoc-helpers';
 
 const _StarshipDetails = (props) => {
   const { getData, itemId } = props;
 
-  const fieldList = {
-    id: 'id',
-    name: 'name',
-    model: 'model',
-    manufacturer: 'manufacturer',
-    costInCredits: 'costInCredits',
-    length: 'length',
-    crew: 'crew',
-    passengers: 'passengers',
-    cargoCapacity: 'cargoCapacity'
-  };
-
-  return <ItemDetails fieldList={fieldList} getData={() => getData(itemId)}/>;
+  return (
+    <ItemDetails getData={() => getData(itemId)}>
+      <Record field="id" label="Id"/>
+      <Record field="name" label="Name"/>
+      <Record field="model" label="Model"/>
+      <Record field="manufacturer" label="Manufacturer"/>
+      <Record field="costInCredits" label="Cost In Credits"/>
+      <Record field="length" label="Length"/>
+    </ItemDetails>
+  );
 };
 
 const StarshipDetails = withSwapiService(_StarshipDetails, (swapiService) => {

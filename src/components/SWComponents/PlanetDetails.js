@@ -1,18 +1,18 @@
-import ItemDetails from '../ItemDetails';
+import ItemDetails, { ItemDetailRecord as Record } from '../ItemDetails';
 import { withSwapiService } from '../hoc-helpers';
 
 const _PlanetDetails = (props) => {
   const { getData, itemId } = props;
 
-  const fieldList = {
-    id: 'id',
-    name: 'name',
-    population: 'population',
-    rotationPeriod: 'rotationPeriod',
-    diameter: 'diameter',
-  };
-
-  return <ItemDetails fieldList={fieldList} getData={() => getData(itemId)}/>;
+  return (
+    <ItemDetails getData={() => getData(itemId)}>
+      <Record field="id" label="id"/>
+      <Record field="name" label="Name"/>
+      <Record field="population" label="Population"/>
+      <Record field="rotationPeriod" label="Rotation Period"/>
+      <Record field="diameter" label="Diameter"/>
+    </ItemDetails>
+  );
 };
 
 const PlanetDetails = withSwapiService(_PlanetDetails, (swapiService) => {
