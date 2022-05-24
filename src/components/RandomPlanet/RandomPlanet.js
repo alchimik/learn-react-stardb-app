@@ -1,33 +1,29 @@
-import React from 'react';
-import Spinner from '../Spinner';
+import { Component } from 'react';
+import { withData, withSwapiService } from '../hoc-helpers';
 
 import './RandomPlanet.scss';
-import { withSwapiService } from '../hoc-helpers';
 
-class RandomPlanet extends React.Component {
+class PlanetRandomizer extends Component {
   state = {
-    planet: false
+    getRandomizedPlanet: null
   };
 
   timer = null;
 
-  onPlanetLoaded = (planet) => {
-    this.setState({ planet });
-  };
+  getRandomInt (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
-  updatePlanet = () => {
-    const id = getRandomInt(1, 15);
+  updatePlanetGetter = () => {
+    const id = this.getRandomInt(1, 15);
     this.setState({
-      planet: false
+      getRandomizedPlanet: () => this.props.getData(id)
     });
-
-    this.props.getPlanet(id)
-      .then(this.onPlanetLoaded);
   };
 
   componentDidMount () {
-    this.updatePlanet();
-    this.timer = setInterval(this.updatePlanet, 15000);
+    this.updatePlanetGetter();
+    this.timer = setInterval(this.updatePlanetGetter, 50000);
   }
 
   componentWillUnmount () {
@@ -35,40 +31,35 @@ class RandomPlanet extends React.Component {
   }
 
   render () {
-    const { planet } = this.state;
-
-    if (!planet) {
-      return (
-        <div className='random-planet  jumbotron  clearfix'>
-          <Spinner/>
-        </div>
-      );
-    }
-
-    const { imageUrl, name, population, rotationPeriod, diameter } = planet;
-
     return (
-      <div className='random-planet  jumbotron  clearfix'>
-        <img src={imageUrl} className='random-planet__logo' alt=""/>
-        <h2>Random planet name: {name}</h2>
-        <div>
-          <ul>
-            <li>Population: {population}</li>
-            <li>Rotation Period: {rotationPeriod}</li>
-            <li>Diameter: {diameter}</li>
-          </ul>
-        </div>
+      <div className="jumbotron">
+        <RandomPlanetView getData={this.state.getRandomizedPlanet}/>
       </div>
     );
   }
 }
 
-function getRandomInt (min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+const RandomPlanetView = withData(function ({ planet }) {
+  return (
+    <div className="random-planet">
+      <img src={planet.imageUrl} className="random-planet__logo" alt=""/>
 
-export default withSwapiService(RandomPlanet, (swapiService) => {
+      <div>
+        <h2>Random planet name: {planet.name}</h2>
+        <ul>
+          <li>Population: {planet.population}</li>
+          <li>Rotation Period: {planet.rotationPeriod}</li>
+          <li>Diameter: {planet.diameter}</li>
+        </ul>
+      </div>
+    </div>
+  );
+}, 'planet');
+
+const RandomPlanet = withSwapiService(PlanetRandomizer, (swapiService) => {
   return {
-    getPlanet: swapiService.getPlanet
+    getData: swapiService.getPlanet
   };
 });
+
+export default RandomPlanet;
