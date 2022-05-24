@@ -2,10 +2,10 @@ import ItemDetails, { ItemDetailRecord as Record } from '../ItemDetails';
 import { withSwapiService } from '../hoc-helpers';
 
 const _StarshipDetails = (props) => {
-  const { getData, itemId } = props;
+  const { swapiService, itemId } = props;
 
   return (
-    <ItemDetails getData={() => getData(itemId)}>
+    <ItemDetails getData={() => swapiService.getStarship(itemId)}>
       <Record field="id" label="Id"/>
       <Record field="name" label="Name"/>
       <Record field="model" label="Model"/>
@@ -16,10 +16,6 @@ const _StarshipDetails = (props) => {
   );
 };
 
-const StarshipDetails = withSwapiService(_StarshipDetails, (swapiService) => {
-  return {
-    getData: swapiService.getStarship
-  };
-});
+const StarshipDetails = withSwapiService(_StarshipDetails);
 
 export default StarshipDetails;

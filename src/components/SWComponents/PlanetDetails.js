@@ -2,10 +2,10 @@ import ItemDetails, { ItemDetailRecord as Record } from '../ItemDetails';
 import { withSwapiService } from '../hoc-helpers';
 
 const _PlanetDetails = (props) => {
-  const { getData, itemId } = props;
+  const { swapiService, itemId } = props;
 
   return (
-    <ItemDetails getData={() => getData(itemId)}>
+    <ItemDetails getData={() => swapiService.getPlanet(itemId)}>
       <Record field="id" label="id"/>
       <Record field="name" label="Name"/>
       <Record field="population" label="Population"/>
@@ -15,10 +15,6 @@ const _PlanetDetails = (props) => {
   );
 };
 
-const PlanetDetails = withSwapiService(_PlanetDetails, (swapiService) => {
-  return {
-    getData: swapiService.getPlanet
-  };
-});
+const PlanetDetails = withSwapiService(_PlanetDetails);
 
 export default PlanetDetails;
