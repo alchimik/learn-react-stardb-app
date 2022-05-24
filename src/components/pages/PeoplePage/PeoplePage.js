@@ -1,5 +1,4 @@
-import React from 'react';
-import { PeopleList } from '../SWComponents';
+import { PeopleList } from '../../SWComponents';
 import { withRouter } from 'react-router-dom';
 
 function PeoplePage ({ history }) {

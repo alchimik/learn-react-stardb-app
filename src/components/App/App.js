@@ -1,11 +1,10 @@
 import React from 'react';
 import AppHeader from '../AppHeader';
 import ErrorBoundary from '../ErrorBoundary';
-import PeoplePage from '../PeoplePage';
 import RandomPlanet from '../RandomPlanet';
-
-import PlanetsPage from '../PlanetsPage/PlanetsPage';
-import StarshipsPage from '../StarshipsPage';
+import PeoplePage from '../pages/PeoplePage';
+import PlanetsPage from '../pages/PlanetsPage';
+import StarshipsPage from '../pages/StarshipsPage';
 import { SwapiServiceProvider } from '../SwapiServiceContext';
 import SwapiService from '../../services/SwapiService';
 

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StarshipDetails, StarshipList } from '../SWComponents';
+import { useState } from 'react';
+import { StarshipDetails, StarshipList } from '../../SWComponents';
 
 function StarshipsPage () {
   const [id, setId] = useState();

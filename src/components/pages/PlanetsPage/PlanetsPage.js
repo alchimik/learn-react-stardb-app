@@ -1,5 +1,4 @@
-import React from 'react';
-import { PlanetDetails, PlanetList } from '../SWComponents';
+import { PlanetDetails, PlanetList } from '../../SWComponents';
 import { useHistory, useParams } from 'react-router-dom';
 
 function PlanetPage () {
