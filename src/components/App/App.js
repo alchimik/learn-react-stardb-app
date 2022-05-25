@@ -1,4 +1,4 @@
-import { StrictMode, Component} from 'react';
+import { StrictMode, Component } from 'react';
 import AppHeader from '../AppHeader';
 import ErrorBoundary from '../ErrorBoundary';
 import RandomPlanet from '../RandomPlanet';
@@ -27,17 +27,9 @@ class App extends Component {
                   <h2>Welcome to StarDB</h2>
                 </Route>
 
-                <Route path="/people/:id?">
-                  <PeoplePage/>
-                </Route>
-
-                <Route path="/planets/:id?">
-                  <PlanetsPage/>
-                </Route>
-
-                <Route path="/starships/:id?">
-                  <StarshipsPage/>
-                </Route>
+                <Route path="/people/:id?" component={PeoplePage}/>
+                <Route path="/planets/:id?" component={PlanetsPage}/>
+                <Route path="/starships/:id?" component={StarshipsPage}/>
               </div>
             </Router>
           </SwapiServiceProvider>
