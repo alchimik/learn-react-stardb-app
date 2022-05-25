@@ -1,11 +1,11 @@
 import { PeopleList, PersonDetails } from '../../SWComponents';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 
-export default function PeoplePage () {
+function PeoplePage (props) {
   return (
     <>
       <Route path="/people" exact>
-        <PeopleList/>
+        <PeopleList onItemSelected={(id) => props.history.push(`${id}`)}/>
       </Route>
       <Route path="/people/:id" render={({ match }) => {
         const { id } = match.params;
@@ -14,3 +14,5 @@ export default function PeoplePage () {
     </>
   );
 }
+
+export default withRouter(PeoplePage);
