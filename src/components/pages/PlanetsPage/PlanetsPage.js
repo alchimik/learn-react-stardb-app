@@ -14,7 +14,7 @@ function PlanetPage () {
     <div className="col">
       {id ?
         <PlanetDetails itemId={id}/> :
-        <span>Выберите элемент из списка!</span>
+        <span>Выберите планетку из списка!</span>
       }
     </div>
   </div>;

@@ -11,7 +11,7 @@ function StarshipsPage () {
     <div className="col">
       {id ?
         <StarshipDetails itemId={id}/> :
-        <span>Выберите элемент из списка!</span>}
+        <span>Выберите караблик из списка!</span>}
     </div>
   </div>;
 }
