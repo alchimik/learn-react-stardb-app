@@ -11,7 +11,6 @@ import SwapiService from '../../services/SwapiService';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './App.scss';
-import { PersonDetails } from '../SWComponents';
 
 class App extends Component {
   render () {
@@ -28,13 +27,9 @@ class App extends Component {
                   <h2>Welcome to StarDB</h2>
                 </Route>
 
-                <Route path="/people" exact>
+                <Route path="/people/:id?">
                   <PeoplePage/>
                 </Route>
-                <Route path="/people/:id" render={({ match }) => {
-                  const { id } = match.params;
-                  return <PersonDetails itemId={id}/>;
-                }}/>
 
                 <Route path="/planets/:id?">
                   <PlanetsPage/>
